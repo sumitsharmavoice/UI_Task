@@ -12,8 +12,13 @@ const Footer = () => {
       <Box className="footer_container">
         <Box className="sub_container">
           <Box className="linkbar">
-            <Box className="section1">
+
+            <Box className="footerLogo_md">
               <img src={footerLogo} />
+            </Box>
+
+            <Box className="section1">
+              <img src={footerLogo} className='footerLogo' />
               <Typography className='link' component={"a"} href='#'>FAQ</Typography>
               <Typography className='link' component={"a"} href='#'>Privacy</Typography>
               <Typography className='link' component={"a"} href='#'>Support</Typography>
@@ -42,7 +47,7 @@ export default Footer
 
 const StyleProvider = styled(Box)({
   "& .footer_container": {
-    height: "142px",
+    height: "auto",
     width: "100%",
     display: "flex",
     justifyContent: "center",
@@ -60,6 +65,9 @@ const StyleProvider = styled(Box)({
       height: "40px",
       width: "100%"
     },
+    "& .footerLogo_md": {
+      display: "none"
+    },
     "& .section1": {
       display: "flex",
       gap: "24px",
@@ -76,5 +84,23 @@ const StyleProvider = styled(Box)({
       gap: "24px",
       alignItems: "center",
     },
+    "@media (max-width: 768px)": {
+      "& .sub_container": {
+        width: "89.1%",
+      },
+      "& .footerLogo_md": {
+        display: "block"
+      },
+      "& .footerLogo": {
+        display: "none"
+      },
+      "& .linkbar": {
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "8px",
+        justifyContent: "space-between",
+        height: "auto"
+      },
+    }
   },
 });

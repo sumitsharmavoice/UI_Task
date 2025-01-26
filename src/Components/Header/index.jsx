@@ -75,23 +75,15 @@ export default Header;
 
 const StyleProvider = styled(Box)(({ theme }) => ({
     "& .header_container": {
-        height: "56px",
         width: "100%",
         position: "fixed",
         zIndex: "100",
         display: "grid",
         placeItems: "center",
         backgroundColor: "#fcfcfb",
+        padding: '8px 0',
 
-        [theme.breakpoints.between('lg', 'xl')]: {
-            height: "48px",
-        },
-        [theme.breakpoints.between('md', 'lg')]: {
-            height: "44px",
-        },
-        [theme.breakpoints.down('md')]: {
-            height: "40px",
-        }
+
     },
     "& .header_toolbar": {
         width: "71.11%",
@@ -107,7 +99,7 @@ const StyleProvider = styled(Box)(({ theme }) => ({
             width: "80%",
         },
         [theme.breakpoints.down('md')]: {
-            width: "90%",
+            width: "89.1%",
         }
     },
     "& .header_section1": {
@@ -117,8 +109,9 @@ const StyleProvider = styled(Box)(({ theme }) => ({
 
         "& img": {
             maxWidth: "4.67rem",
+            padding: '0px !important',
             [theme.breakpoints.down('md')]: {
-                maxWidth: "57px",
+                // maxWidth: "57px",
             }
         },
         "& .MuiTypography-h5": {

@@ -9,21 +9,22 @@ import fishImg from "../../Assets/fishImg.png"
 import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
 import { styled } from '@mui/material/styles';
-import { Box, Typography, Button, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Box, Typography, Button, Accordion, AccordionSummary, AccordionDetails, useMediaQuery, Divider } from '@mui/material';
 
 const Home = () => {
+  const md = useMediaQuery((theme) => theme.breakpoints.up('md'));
+
 
   const RenderBannerOne = () => {
     return (
       <Box className="banner1_container">
         <Box className="sub_container">
           <Box className="section1">
-            <Typography variant="h1">Central Texas<br />Fly Fishing</Typography>
+            <Typography variant={md ? 'h1' : 'h3'}>Central Texas<br />Fly Fishing</Typography>
             <Typography variant="body1" color="info">
               At lacus vitae nulla sagittis scelerisque nisl. Pellentesque duis cursus vestibulum, facilisi ac, sed faucibus.
             </Typography>
             <Button className="get_started_btn" variant="contained">Get started</Button>
-
           </Box>
           <Box className="section2">
             <img src={bannerImg1} className="bannerImg" />
@@ -38,9 +39,7 @@ const Home = () => {
     const DummyContent = ({ title }) => {
       return (
         <AccordionDetails className="AccordionDetails">
-          <Box className="img_container">
-            <img src={fishImg} />
-          </Box>
+          <img src={fishImg} className="banner2_img" />
           <Box className="content_container">
             <Typography variant="h4">{title}</Typography>
             <Typography variant="body1" color="info">
@@ -57,25 +56,37 @@ const Home = () => {
           <Box className="title_section">
             <Typography variant="h2">Featured options</Typography>
           </Box>
-          <Box className="accordian_section">
+          <Box className="content_section">
             {AccordionDummyData.map((title, index) => (
-              <Accordion className="Accordion" defaultExpanded={Boolean(index == 0)}>
-                <AccordionSummary
-                  expandIcon={<img src={arrowIcon} />}
-                  aria-controls="panel1-content"
-                  id="panel1-header"
-                  className="AccordionSummary"
-                >
-                  <Typography variant="body1">{title}</Typography>
-                </AccordionSummary>
-                <DummyContent title={title} />
-              </Accordion>
+              <>
+                <Accordion className="Accordion" defaultExpanded={Boolean(index == 0)}>
+                  <AccordionSummary
+                    expandIcon={<img src={arrowIcon} />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                    className="AccordionSummary"
+                  >
+                    <Typography variant="body1">{title}</Typography>
+                  </AccordionSummary>
+                  <DummyContent title={title} />
+                </Accordion>
+                <Box className="banner2_card_md_wrapper">
+                  <Box className="card_container" style={{ backgroundImage: `url(${fishImg})` }}>
+                    <Typography variant="h4">{title}</Typography>
+                    <Typography variant="body1" color="info">
+                      Proin nibh nisl condimentum id venenatis a condimentum vitae sapien. Tellus in metus vulputate eu sc
+                    </Typography>
+                    <Button className="btn_sm">Learn more</Button>
+                  </Box>
+                </Box>
+              </>
             ))}
           </Box>
         </Box>
       </Box>
     )
   }
+
 
   const RenderBannerThree = () => {
     const DummyCardData = [
@@ -100,19 +111,24 @@ const Home = () => {
         description: "Sit amet mattis vulputate enim nulla aliquet. At augue eget arcu dictum varius. Volutpat commodo sed"
       }
     ]
-    const Card = ({ Record }) => (
-      <Box className="card_container">
-        <Box className="section1">
-          <img src={Record.img} />
+    const Card = ({ Record, index }) => (
+      <>
+        {index == 0 && <Divider color="#C6C5C3" width="100%" className="divider" />}
+        <Box className="card_container">
+          <img src={Record.img} className="section1_img" />
+          <Typography variant="caption" className="title_md">{Record.title}</Typography>
+          <Box className="section2">
+            <Typography variant="caption" className="title">{Record.title}</Typography>
+            <img src={Record.img} className="section1_img_md" />
+            <Typography variant="subtitle1">
+              {Record.description}
+            </Typography>
+            <Button className="btn_sm mt_12 btn_lg">Read more</Button>
+          </Box>
+          <Button className="btn_sm mt_12 btn_md">Read more</Button>
         </Box>
-        <Box className="section2">
-          <Typography variant="caption">{Record.title}</Typography>
-          <Typography variant="subtitle1">
-            {Record.description}
-          </Typography>
-          <Button className="btn_sm mt_12">Read more</Button>
-        </Box>
-      </Box>
+        <Divider color="#C6C5C3" width="100%" className="divider" />
+      </>
     )
     return (
       <Box className="banner3_container">
@@ -121,12 +137,13 @@ const Home = () => {
             <Typography variant="h2">Member stories</Typography>
           </Box>
           <Box className="card_wrapper">
-            {DummyCardData.map((Record) => (<Card Record={Record} />))}
+            {DummyCardData.map((Record, index) => (<Card Record={Record} index={index} />))}
           </Box>
         </Box>
       </Box>
     )
   }
+
 
   return (
     <StyleProvider>
@@ -143,13 +160,14 @@ export default Home;
 
 const StyleProvider = styled(Box)({
   "& .banner1_container": {
-    height: "466px",
+    height: "auto",
     width: "100%",
     display: "grid",
     placeItems: "center",
     "& .sub_container": {
       width: "71.11%",
-      height: "306px",
+      margin: "128px 0 80px 0",
+      height: "auto",
       display: 'flex',
       justifyContent: "space-between",
       gap: "24px"
@@ -170,8 +188,29 @@ const StyleProvider = styled(Box)({
       boxShadow: "none"
     },
     "& .bannerImg": {
-      width: "400px",
-      height: "300px",
+      width: "100%",
+
+    },
+    "@media (max-width: 768px)": {
+      "& .sub_container": {
+        width: "100%",
+        flexDirection: 'column-reverse',
+        alignItems: 'center',
+        gap: '0px',
+        margin: "48px 0 0px 0",
+      },
+      "& .section1": {
+        padding: "40px 0",
+        width: '89.1%'
+      },
+      "& .section2": {
+        width: '100%'
+      },
+      "& .bannerImg": {
+        width: "100%",
+        height: "auto",
+        maxHeight: "400px",
+      },
     }
   },
   "& .banner2_container": {
@@ -188,10 +227,18 @@ const StyleProvider = styled(Box)({
       flexDirection: "column",
       gap: "24px"
     },
+    "& .content_section": {},
+    "& .banner2_card_md_wrapper": {
+      display: "none",
+    },
     "& .Accordion": {
       background: "#F1ECE1",
       borderRadius: "0",
-      boxShadow: "none"
+      boxShadow: "none",
+      margin: "0",
+      "&::before": {
+        content: "none"
+      }
     },
     "& .AccordionSummary": {
       background: "#F1ECE1",
@@ -208,8 +255,8 @@ const StyleProvider = styled(Box)({
       padding: "0",
       display: "flex"
     },
-    "& .img_container": {
-
+    "& .banner2_img": {
+      width: "39.1%",
     },
     "& .content_container": {
       padding: "24px",
@@ -217,6 +264,36 @@ const StyleProvider = styled(Box)({
       display: "flex",
       flexDirection: "column",
       gap: "8px"
+    },
+    "& .card_container": {
+      width: "100%",
+      height: "auto",
+      backgroundColor: "rgba(241, 236, 225, 0.7)",
+      backgroundBlendMode: "overlay",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      padding: "24px",
+      display: "flex",
+      flexDirection: "column",
+      gap: "8px"
+    },
+    "@media (max-width: 768px)": {
+      "& .sub_container": {
+        width: "89.1%",
+        margin: "40px 0",
+      },
+      "& .Accordion": {
+        display: "none"
+      },
+      "& .banner2_card_md_wrapper": {
+        display: "block"
+      },
+      "& .content_section": {
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px"
+      }
     }
   },
   "& .banner3_container": {
@@ -245,16 +322,84 @@ const StyleProvider = styled(Box)({
       height: "200px",
       width: "47.66%"
     },
-    "& .section1": {
-
+    "& .section1_img": {
+      width: "41%"
+    },
+    "& .section1_img_md": {
+      display: "none"
+    },
+    "& .title_md": {
+      display: "none"
+    },
+    "& .title": {
+      display: "block"
+    },
+    "& .btn_lg": {
+      display: "block"
+    },
+    "& .btn_md": {
+      display: "none",
+      border: "1px solid #969491",
+      background: "unset"
     },
     "& .section2": {
+      width: "59%",
       padding: "0 24px",
       display: "flex",
       gap: "4px",
       flexDirection: "column"
     },
+    "& .divider": {
+      display: "none"
+    },
+    "@media (max-width: 1439px)": {
+      "& .sub_container": {
+        margin: "40px 0",
+      },
+      "& .card_container": {
+        width: "100%"
+      },
+      "& .divider": {
+        display: "block"
+      }
+    },
+    "@media (max-width: 768px)": {
+      "& .card_wrapper": {
+        gap: "32px",
+      },
+      "& .section1_img": {
+        display: "none"
+      },
+      "& .section1_img_md": {
+        display: "block",
+        width: "25.51%",
+        minWidth: "100px"
+      },
+      "& .title_md": {
+        display: "block"
+      },
+      "& .title": {
+        display: "none"
+      },
+      "& .card_container": {
+        flexDirection: "column",
+        height: "auto"
+      },
+      "& .section2": {
+        width: "100%",
+        padding: "0",
+        gap: "16px",
+        flexDirection: "row"
+      },
+      "& .btn_lg": {
+        display: "none"
+      },
+      "& .btn_md": {
+        display: "block"
+      },
+    }
   },
+
   "& .btn_sm": {
     background: "#DFDEDD",
     width: "fit-content",

@@ -17,6 +17,13 @@ const theme = createTheme({
     },
     h2: {
       fontSize: "48px",
+      fontWeight: 600,
+      "@media (max-width: 768px)": {
+        fontSize: "40px"
+      }
+    },
+    h3: {
+      fontSize: "40px",
       fontWeight: 600
     },
     h4: {
@@ -40,7 +47,8 @@ const theme = createTheme({
     },
     subtitle1: {
       fontSize: "14px",
-      fontWeight: 400
+      fontWeight: 400,
+      lineHeight: "21px"
     },
     subtitle2: {
       fontSize: "12px",
